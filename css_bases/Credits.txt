@@ -1,0 +1,4 @@
+MadCow - Grenades and C4
+AndrewMcWatters - swep_bases
+Me (Matsilagi) - Fixing it
+Danny - Viewmodel bobbing code

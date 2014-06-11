@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/Weapons/v_357/357_sheet"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/Weapons/v_357/357_sheet_mask"
+	"$bumpmap" "models/weapons/v_357/357_sheet_n"
+	"$envmaptint" "[ .56 .67 .75 ]"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$model" 1
+	"$envmapsaturation" .5
+
+	$phong 1
+//	$phongexponent 33
+	$phongexponenttexture "models/weapons/v_357/357_sheet_exp"
+	$phongboost	4
+
+  	$selfillum 1
+}
