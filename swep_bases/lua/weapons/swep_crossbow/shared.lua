@@ -108,6 +108,9 @@ end
 ---------------------------------------------------------*/
 function SWEP:PrimaryAttack()
 
+	local pOwner = self.Owner;
+	local pViewModel = self.Owner:GetViewModel();
+
 	// Make sure we can shoot first
 	if ( !self:CanPrimaryAttack() ) then return end
 
@@ -120,7 +123,6 @@ function SWEP:PrimaryAttack()
 
 	// Signal a reload
 	self.m_bMustReload = true;
-	self:SetSkin( BOLT_SKIN_NORMAL );
 	
 	self:IdleStuff()
 
@@ -146,9 +148,11 @@ end
 ---------------------------------------------------------*/
 function SWEP:Reload()
 
+	local pOwner = self.Owner;
+	local pViewModel = self.Owner:GetViewModel()
 
 	if ( self.Weapon:DefaultReload( ACT_VM_RELOAD ) ) then
-		timer.Simple(1, function()local vm = self.Owner:GetViewModel() vm:SetSkin(1) end)
+		timer.Simple(1, function() pViewModel:SetSkin( BOLT_SKIN_GLOW ) end)
 		timer.Simple(0.90, function()self.Owner:EmitSound(self.Primary.Special1)  end)
 		self.m_bMustReload = false;
 		return true;
@@ -236,6 +240,7 @@ function SWEP:FireBolt()
 	end
 
 	local pOwner = self.Owner;
+	local pViewModel = self.Owner:GetViewModel();
 
 	if ( pOwner == NULL ) then
 		return;
@@ -280,7 +285,7 @@ end
 	// self:DoLoadEffect();
 	// self:SetChargerState( CHARGER_STATE_DISCHARGE );
 	
-	self.Owner:GetViewModel():SetSkin( 0 );
+	pViewModel:SetSkin( BOLT_SKIN_NORMAL );
 	
 	self:IdleStuff()
 
@@ -309,13 +314,16 @@ end
 ---------------------------------------------------------*/
 function SWEP:Deploy()
 
+	local pOwner = self.Owner;
+	local pViewModel = self.Owner:GetViewModel();
+
 	if ( self.Weapon:Clip1() <= 0 ) then
 		self.Weapon:SendWeaponAnim( ACT_CROSSBOW_DRAW_UNLOADED );
 		return self:SetDeploySpeed( self.Weapon:SequenceDuration() );
 	end
 
 	self:IdleStuff()
-	self.Owner:GetViewModel():SetSkin( 1 );
+	pViewModel:SetSkin( BOLT_SKIN_GLOW );
 
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW );
 	return self:SetDeploySpeed( self.Weapon:SequenceDuration() ); 
