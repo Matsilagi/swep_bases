@@ -120,6 +120,7 @@ function SWEP:PrimaryAttack()
 
 	// Signal a reload
 	self.m_bMustReload = true;
+	self:SetSkin( BOLT_SKIN_NORMAL );
 	
 	self:IdleStuff()
 
@@ -145,7 +146,10 @@ end
 ---------------------------------------------------------*/
 function SWEP:Reload()
 
+
 	if ( self.Weapon:DefaultReload( ACT_VM_RELOAD ) ) then
+		timer.Simple(1, function()local vm = self.Owner:GetViewModel() vm:SetSkin(1) end)
+		timer.Simple(0.90, function()self.Owner:EmitSound(Sound("Weapon_Crossbow.BoltElectrify"))  end)
 		self.m_bMustReload = false;
 		return true;
 	end
@@ -276,6 +280,8 @@ end
 	// self:DoLoadEffect();
 	// self:SetChargerState( CHARGER_STATE_DISCHARGE );
 	
+	self.Owner:GetViewModel():SetSkin( 0 );
+	
 	self:IdleStuff()
 
 end
@@ -309,7 +315,7 @@ function SWEP:Deploy()
 	end
 
 	self:IdleStuff()
-	self:SetSkin( BOLT_SKIN_GLOW );
+	self.Owner:GetViewModel():SetSkin( 1 );
 
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW );
 	return self:SetDeploySpeed( self.Weapon:SequenceDuration() ); 
