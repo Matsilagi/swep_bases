@@ -149,7 +149,7 @@ function SWEP:Reload()
 
 	if ( self.Weapon:DefaultReload( ACT_VM_RELOAD ) ) then
 		timer.Simple(1, function()local vm = self.Owner:GetViewModel() vm:SetSkin(1) end)
-		timer.Simple(0.90, function()self.Owner:EmitSound(Sound("Weapon_Crossbow.BoltElectrify"))  end)
+		timer.Simple(0.90, function()self.Owner:EmitSound(self.Primary.Special1)  end)
 		self.m_bMustReload = false;
 		return true;
 	end
