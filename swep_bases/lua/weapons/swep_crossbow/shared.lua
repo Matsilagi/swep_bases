@@ -152,8 +152,8 @@ function SWEP:Reload()
 	local pViewModel = self.Owner:GetViewModel()
 
 	if ( self.Weapon:DefaultReload( ACT_VM_RELOAD ) ) then
-		timer.Simple(1, function() pViewModel:SetSkin( BOLT_SKIN_GLOW ) end)
-		timer.Simple(0.90, function()self.Owner:EmitSound(self.Primary.Special1)  end)
+		timer.Simple(1, function() pViewModel:SetSkin( BOLT_SKIN_GLOW ) self:CrossbowLoad() end)
+		timer.Simple(0.95, function()self.Owner:EmitSound(self.Primary.Special1)  end)
 		self.m_bMustReload = false;
 		return true;
 	end
@@ -286,6 +286,8 @@ end
 	// self:SetChargerState( CHARGER_STATE_DISCHARGE );
 	
 	pViewModel:SetSkin( BOLT_SKIN_NORMAL );
+	
+	self:CrossbowLoad()
 	
 	self:IdleStuff()
 
@@ -457,4 +459,15 @@ function SWEP:CalcViewModelView(ViewModel, oldPos, oldAng, pos, ang)
 	SwayDelta = LerpAngle(math.Clamp(FrameTime() * 5, 0, 1), SwayDelta, SwayAng)
 	
 	return oldPos + oldAng:Up() * SwayDelta.p + oldAng:Right() * SwayDelta.y + oldAng:Up() * oldAng.p / 90 * 2, oldAng
+end
+
+function SWEP:CrossbowLoad()
+local pOwner = self.Owner;
+local pViewModel = pOwner:GetViewModel()
+local spark = pViewModel:LookupAttachment( "spark" )
+local effectdata = EffectData()
+effectdata:SetEntity( pViewModel )
+effectdata:SetAttachment( spark ) // not sure if we need a start and origin (endpoint) for this effect, but whatever
+effectdata:SetScale( 1 )
+util.Effect( "CrossbowLoad", effectdata )
 end
