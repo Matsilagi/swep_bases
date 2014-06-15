@@ -193,14 +193,9 @@ function SWEP:Think()
 
 	if CLIENT and self.EnableIdle then return end
 	if self.idledelay and CurTime() > self.idledelay then
-	 if ( self:Ammo1() == 0 ) then
-		self.idledelay = nil
-		self:SendWeaponAnim(ACT_VM_FIDGET)
-		else
 		self.idledelay = nil	
 		self:SendWeaponAnim(ACT_VM_IDLE)
-		end
-end
+	end
 
 	// Disallow zoom toggling
 	// self:CheckZoomToggle();
