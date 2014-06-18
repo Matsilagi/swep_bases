@@ -444,18 +444,15 @@ if ( !CLIENT ) then
 	pBugBait:Spawn()
 	pBugBait:SetVelocity( vecThrow );
 
-	if ( pGrenade ) then
+	if ( pBugBait ) then
 		if ( pPlayer && !pPlayer:Alive() ) then
 			vecThrow = pPlayer:GetVelocity();
 
-			local pPhysicsObject = pGrenade:GetPhysicsObject();
+			local pPhysicsObject = pBugBait:GetPhysicsObject();
 			if ( pPhysicsObject ) then
 				vecThrow = pPhysicsObject:SetVelocity();
 			end
 		end
-
-		pGrenade.m_flDamage = self.Primary.Damage;
-		pGrenade.m_DmgRadius = GRENADE_DAMAGE_RADIUS;
 	end
 end
 
@@ -490,18 +487,13 @@ if ( !CLIENT ) then
 	local vecThrow;
 	vecThrow = pPlayer:GetVelocity();
 	vecThrow = vecThrow + vForward * 350 + Vector( 0, 0, 50 );
-	local pGrenade = ents.Create( self.Primary.AmmoType );
-	pGrenade:SetPos( vecSrc );
-	pGrenade:SetAngles( vec3_angle );
-	pGrenade:SetOwner( pPlayer );
-	pGrenade:Spawn()
-	pGrenade:GetPhysicsObject():SetVelocity( vecThrow );
-	pGrenade:GetPhysicsObject():AddAngleVelocity( Vector(200,math.random(-600,600),0) );
-
-	if ( pGrenade ) then
-		pGrenade.m_flDamage = self.Primary.Damage;
-		pGrenade.m_DmgRadius = GRENADE_DAMAGE_RADIUS;
-	end
+	local pBugBait = ents.Create( self.Primary.AmmoType );
+	pBugBait:SetPos( vecSrc );
+	pBugBait:SetAngles( vec3_angle );
+	pBugBait:SetOwner( pPlayer );
+	pBugBait:Spawn()
+	pBugBait:GetPhysicsObject():SetVelocity( vecThrow );
+	pBugBait:GetPhysicsObject():AddAngleVelocity( Vector(200,math.random(-600,600),0) );
 end
 
 	self.Weapon:EmitSound( self.Secondary.Sound );
